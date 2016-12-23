@@ -1,8 +1,6 @@
 # Spotilocal
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/spotilocal`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Spotilocal allows you to query the local spotify client and fetch informations about the current status and perform actions such as start/stop.
 
 ## Installation
 
@@ -22,7 +20,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Currently you have to enter the port manually. Autodiscover is planned.
+```ruby
+# Create a new spotify object
+s = Spotilocal::Local.new port: 4382
+```
+
+After that you can simply fetch some informations.
+```ruby
+s.status
+```
 
 ## Development
 
@@ -32,7 +39,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/spotilocal.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Flipez/spotilocal.
 
 
 ## License
