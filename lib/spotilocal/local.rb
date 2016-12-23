@@ -16,6 +16,16 @@ module Spotilocal
                          params: { csrf: csrf, oauth: oauth })
       puts JSON.parse(req.response_body)
     end
+    
+    def pause
+      req = Typhoeus.get("#{url}/remote/pause.json",
+                         params: { csrf: csrf, oauth: oauth, pause: 'true' })
+    end
+    
+    def unpause
+      req = Typhoeus.get("#{url}/remote/pause.json",
+                         params: { csrf: csrf, oauth: oauth, pause: 'false' })
+    end
 
     private
 
