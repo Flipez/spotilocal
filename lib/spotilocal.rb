@@ -1,5 +1,8 @@
-require "spotilocal/version"
+require 'typhoeus'
+require 'json'
+
+require 'spotilocal/version'
+require 'spotilocal/local'
 
 module Spotilocal
-  # Your code goes here...
 end
