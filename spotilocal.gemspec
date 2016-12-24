@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Remote control your spotify client'
   spec.description   = 'Wrapper to remote control a local spotify client'
-  spec.homepage      = 'https://brauser.io'
+  spec.homepage      = 'https://github.com/Flipez/spotilocal'
   spec.license       = 'MIT'
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
