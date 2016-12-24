@@ -4,7 +4,7 @@ module Spotilocal
 
     HEADERS = { Origin: 'https://open.spotify.com' }.freeze
 
-    def initialize(port: nil)
+    def initialize(port: discover_port)
       raise 'Port required' unless port
       @url = "http://localhost:#{port}"
       @csrf = csrf_token
@@ -12,17 +12,15 @@ module Spotilocal
     end
 
     def status
-      req = Typhoeus.get("#{url}/remote/status.json",
-                         params: { csrf: csrf, oauth: oauth })
-      puts JSON.parse(req.response_body)
+      lcall(:status)
     end
 
     def pause
-      !lcall(:pause, params: { pause: 'true' })['playing']
+      !lcall(:pause, params: { pause: 'true' }).playing
     end
 
     def unpause
-      lcall(:pause, params: { pause: 'false' })['playing']
+      lcall(:pause, params: { pause: 'false' }).playing
     end
 
     private
@@ -30,7 +28,7 @@ module Spotilocal
     def lcall(loc, params: {}, resource: :remote)
       req = Typhoeus.get("#{url}/#{resource}/#{loc}.json",
                          params: params.merge(csrf: csrf, oauth: oauth))
-      JSON.parse(req.response_body)
+      JSON.parse(req.response_body, object_class: OpenStruct)
     end
 
     def oauth_token
@@ -41,6 +39,14 @@ module Spotilocal
     def csrf_token
       req = Typhoeus.get("#{url}/simplecsrf/token.json", headers: HEADERS)
       JSON.parse(req.response_body)['token']
+    end
+
+    def discover_port
+      (4370..4390).each do |port|
+        if Typhoeus.get("http://localhost:#{port}", timeout: 1).return_code == :ok
+          return port
+        end
+      end
     end
   end
 end
