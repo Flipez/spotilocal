@@ -1,5 +1,5 @@
 module Spotilocal
-  class Local
+  class Client
     attr_accessor :port, :csrf, :url, :oauth
 
     HEADERS = { Origin: 'https://open.spotify.com' }.freeze
@@ -18,16 +18,20 @@ module Spotilocal
     end
 
     def pause
-      Typhoeus.get("#{url}/remote/pause.json",
-                   params: { csrf: csrf, oauth: oauth, pause: 'true' })
+      !lcall(:pause, params: { pause: 'true' })['playing']
     end
 
     def unpause
-      Typhoeus.get("#{url}/remote/pause.json",
-                   params: { csrf: csrf, oauth: oauth, pause: 'false' })
+      lcall(:pause, params: { pause: 'false' })['playing']
     end
 
     private
+
+    def lcall(loc, params: {}, resource: :remote)
+      req = Typhoeus.get("#{url}/#{resource}/#{loc}.json",
+                         params: params.merge(csrf: csrf, oauth: oauth))
+      JSON.parse(req.response_body)
+    end
 
     def oauth_token
       req = Typhoeus.get('http://open.spotify.com/token', followlocation: true)

@@ -2,7 +2,7 @@ require 'typhoeus'
 require 'json'
 
 require 'spotilocal/version'
-require 'spotilocal/local'
+require 'spotilocal/client'
 
 module Spotilocal
 end
