@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-Currently you have to enter the port manually. Autodiscover is planned.
+You can specify a port to create the instance faster. Otherwise spotilocal will try to discover the port.
 ```ruby
 # Create a new spotify object
 s = Spotilocal::Client.new port: 4382
