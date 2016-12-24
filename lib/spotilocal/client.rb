@@ -43,7 +43,8 @@ module Spotilocal
 
     def discover_port
       (4370..4390).each do |port|
-        if Typhoeus.get("http://localhost:#{port}", timeout: 1).return_code == :ok
+        if Typhoeus.get("http://localhost:#{port}",
+                        timeout: 1).return_code == :ok
           return port
         end
       end
