@@ -1,5 +1,6 @@
 # Spotilocal
 [![Build Status](https://travis-ci.org/Flipez/spotilocal.svg?branch=master)](https://travis-ci.org/Flipez/spotilocal)
+[![Gem Version](https://badge.fury.io/rb/spotilocal.svg)](https://badge.fury.io/rb/spotilocal)
 
 Spotilocal allows you to query the local spotify client and fetch informations about the current status and perform actions such as start/stop.
 
