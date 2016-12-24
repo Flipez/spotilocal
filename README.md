@@ -24,12 +24,14 @@ Or install it yourself as:
 Currently you have to enter the port manually. Autodiscover is planned.
 ```ruby
 # Create a new spotify object
-s = Spotilocal::Local.new port: 4382
+s = Spotilocal::Client.new port: 4382
 ```
 
 After that you can simply fetch some informations.
 ```ruby
 s.status
+s.pause   # true if paused
+s.unpause # true if playing
 ```
 
 ## Development
