@@ -15,6 +15,11 @@ module Spotilocal
       lcall(:status)
     end
 
+    def play(uri)
+      r = lcall(:play, params: { uri: uri })
+      r.playing && r.track.track_resource.uri == uri
+    end
+
     def pause
       !lcall(:pause, params: { pause: 'true' }).playing
     end
