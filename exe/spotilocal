@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'thor'
+require_relative '../lib/spotilocal'
+require_relative '../lib/spotilocal/cli'
+Spotilocal::CLI.start(ARGV)

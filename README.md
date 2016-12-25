@@ -22,7 +22,7 @@ Or install it yourself as:
     $ gem install spotilocal
 
 ## Usage
-
+### Libary
 You can specify a port to create the instance faster. Otherwise spotilocal will try to discover the port.
 ```ruby
 # Create a new spotify object
@@ -35,6 +35,17 @@ s.status
 s.pause   # true if paused
 s.unpause # true if playing
 ```
+
+### Cli
+Spotilocas comes with a thor cli. The cli is currently a bit slow due to port autodiscover. You can use it like this
+
+```bash
+spotilocal play URI # plays uri
+spotilocal pause    # guess what
+spotilocal unpause  # yup..
+```
+
+Thor allows argument guessing. So commands like `spotilocal un` will work too.
 
 ## Development
 
