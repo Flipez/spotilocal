@@ -15,25 +15,48 @@ module Spotilocal
       lcall(:status)
     end
 
+    def current
+      current = Hash.new
+      current['track'] = track_from_status status
+      current['album'] = album_from_status status
+      current['artist'] = artist_from_status status
+
+      current
+    end
+
     def play(uri)
       r = lcall(:play, params: { uri: uri })
-      r.playing && r.track.track_resource.uri == uri
+      r['playing'] && r['track']['track_resource']['uri'] == uri
     end
 
     def pause
-      !lcall(:pause, params: { pause: 'true' }).playing
+      !lcall(:pause, params: { pause: 'true' })['playing']
     end
 
     def unpause
-      lcall(:pause, params: { pause: 'false' }).playing
+      lcall(:pause, params: { pause: 'false' })['playing']
     end
 
     private
 
+    %w(artist album track).each do |res|
+      define_method("#{res}_from_status") do |_status|
+        h = Hash.new
+        h['name'] = _status['track']["#{res}_resource"]['name']
+        h['uri'] = _status['track']["#{res}_resource"]['uri']
+        if res == 'track'
+          h['length'] = _status['track']['length']
+          h['type'] = _status['track']['track_type']
+        end
+
+        h
+      end
+    end
+
     def lcall(loc, params: {}, resource: :remote)
       req = Typhoeus.get("#{url}/#{resource}/#{loc}.json",
                          params: params.merge(csrf: csrf, oauth: oauth))
-      JSON.parse(req.response_body, object_class: OpenStruct)
+      JSON.parse(req.response_body)
     end
 
     def oauth_token
