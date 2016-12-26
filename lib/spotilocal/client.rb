@@ -16,7 +16,7 @@ module Spotilocal
     end
 
     def current
-      current = Hash.new
+      current = {}
       current['track'] = track_from_status status
       current['album'] = album_from_status status
       current['artist'] = artist_from_status status
@@ -40,13 +40,13 @@ module Spotilocal
     private
 
     %w(artist album track).each do |res|
-      define_method("#{res}_from_status") do |_status|
-        h = Hash.new
-        h['name'] = _status['track']["#{res}_resource"]['name']
-        h['uri'] = _status['track']["#{res}_resource"]['uri']
+      define_method("#{res}_from_status") do |stat|
+        h = {}
+        h['name'] = stat['track']["#{res}_resource"]['name']
+        h['uri'] = stat['track']["#{res}_resource"]['uri']
         if res == 'track'
-          h['length'] = _status['track']['length']
-          h['type'] = _status['track']['track_type']
+          h['length'] = stat['track']['length']
+          h['type'] = stat['track']['track_type']
         end
 
         h
