@@ -37,12 +37,44 @@ s.unpause # true if playing
 ```
 
 ### Cli
-Spotilocas comes with a thor cli. The cli is currently a bit slow due to port autodiscover. You can use it like this
+Spotilocal comes with a thor cli. The cli is currently a bit slow due to port autodiscover. You can use it like this
 
 ```bash
 spotilocal play URI # plays uri
 spotilocal pause    # guess what
 spotilocal unpause  # yup..
+```
+
+To display or fetch information about the current status you can use `spotilocal current [RESOURCE]`
+Available resources are *album*, *track* and *artist*
+
+```bash
+spotilocal current album | jq
+# {
+#   "name": "Die bekannteste unbekannte Band der Welt",
+#   "uri": "spotify:album:6EcMsNVKYMpA2Kqi1GSUAA"
+# }
+
+spotilocal current artist | jq
+# {
+#   "name": "SDP",
+#   "uri": "spotify:artist:1EfwyuCzDQpCslZc8C9gkG"
+# }
+
+spotilocal current track | jq
+# {
+#   "name": "Wenn ich groß bin",
+#   "uri": "spotify:track:5oEoQtl4qDwR7kstlTTBRu",
+#   "length": 206,
+#   "type": "normal"
+# }
+```
+
+If you only want one specific information you can use `--only` or `-o`
+
+```bash
+spotilocal current track -o name
+#> Wenn ich groß bin
 ```
 
 Thor allows argument guessing. So commands like `spotilocal un` will work too.
