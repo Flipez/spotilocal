@@ -14,5 +14,20 @@ module Spotilocal
     def unpause
       Spotilocal::Client.new.unpause
     end
+
+    desc 'status', 'display current client status (verbose)'
+    def status
+      puts Spotilocal::Client.new.status.to_json
+    end
+
+    desc 'current RESOURCE', 'display information about playing resource'
+    method_option :only, aliases: '-o', desc: 'Display only given key'
+    def current(resource)
+      if options[:only]
+        puts Spotilocal::Client.new.current[resource][options[:only]]
+      else
+        puts Spotilocal::Client.new.current[resource].to_json
+      end
+    end
   end
 end
